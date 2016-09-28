@@ -16,8 +16,9 @@
   - [Configuration file](#configuration-file)
     - [Configuration loading](#configuration-loading)
     - [Configuration options](#configuration-options)
-  - [Source code comments](#source-code-comments)
   - [Generating a 'todo' list](#generating-a-todo-list)
+  - [Beware of multiple configuration files](#beware-of-multiple-configuration-files)
+  - [Source code comments](#source-code-comments)
 - [Usage](#usage)
 - [Developing Reek / Contributing](#developing-reek--contributing)
 - [Output formats](#output-formats)
@@ -352,30 +353,6 @@ configurations you can also check out [the `default.reek` file in this repositor
 Note that you do not need a configuration file at all.
 If you're fine with all the [defaults](defaults.reek) we set you can skip this completely.
 
-### Source code comments
-
-In case you need to suppress a smell warning and you can't or don't want to
-use configuration files for whatever reasons you can also use special
-source code comments like this:
-
-```Ruby
-# This method smells of :reek:NestedIterators
-def smelly_method foo
-  foo.each {|bar| bar.each {|baz| baz.qux}}
-end
-```
-
-You can even pass in smell specific configuration settings:
-
-```Ruby
-# :reek:NestedIterators { max_allowed_nesting: 2 }
-def smelly_method foo
-  foo.each {|bar| bar.each {|baz| baz.qux}}
-end
-```
-
-This is an incredible powerful feature and further explained under [Smell Suppresion](docs/Smell-Suppression.md).
-
 ### Generating a 'todo' list
 
 Integrating tools like Reek into an existing larger codebase can be daunting when you have to fix
@@ -411,6 +388,57 @@ reek --todo lib/
 ```
 
 '.todo.reek' will get overwritten with a possibly updated configuration.
+
+### Beware of multiple configuration files
+
+Reek takes one configuration file and one configuration file only.
+This should not be a problem in most cases but there might be some subtle edge cases
+which could lead to a lot of confusion potentially.
+
+An example scenario:
+
+* You have a configuration file called `config.reek` in your project directory
+* You tell Reek explicitly to use this file via `reek -c config.reek`
+* Somebody else (or you a while ago) used the `--todo` flag we explained above which means
+that there is a `.todo.reek` file in your project directory as well
+* If you now call Reek without specifying the configuration file explicitly, Reek
+will take the first one that it can find. Which in this example would be `.todo.reek`,
+because, if you sort names lexicographically, this will come before `config.reek`.
+This might lead to surprising and confusing results, especially since it's pretty
+easy to overlook a dot file like `.todo.reek`
+
+As you have seen above, Reek is very flexible when it comes to where you can put
+your configuration file (project directory, home directory and so on) but this
+flexibility comes with a price. And this price are subtle edge cases like the
+one above.
+
+In case you have some weird problems with your configuration double check that you have only
+one configuration file available to Reek. Or tell Reek explicitly which file to use
+via `reek -c config.reek` which is the recommended, least ambiguous way in any case.
+
+### Source code comments
+
+In case you need to suppress a smell warning and you can't or don't want to
+use configuration files for whatever reasons you can also use special
+source code comments like this:
+
+```Ruby
+# This method smells of :reek:NestedIterators
+def smelly_method foo
+  foo.each {|bar| bar.each {|baz| baz.qux}}
+end
+```
+
+You can even pass in smell specific configuration settings:
+
+```Ruby
+# :reek:NestedIterators { max_allowed_nesting: 2 }
+def smelly_method foo
+  foo.each {|bar| bar.each {|baz| baz.qux}}
+end
+```
+
+This is an incredible powerful feature and further explained under [Smell Suppresion](docs/Smell-Suppression.md).
 
 ## Usage
 
