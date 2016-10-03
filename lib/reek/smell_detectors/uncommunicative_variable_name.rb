@@ -48,6 +48,10 @@ module Reek
         [:module, :class, :def, :defs]
       end
 
+      def self.custom_options
+        Set.new [:accept, :reject]
+      end
+
       #
       # Checks the given +context+ for uncommunicative names.
       #

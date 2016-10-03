@@ -22,6 +22,10 @@ module Reek
           EXCLUDE_KEY => ['initialize'])
       end
 
+      def self.custom_options
+        Set.new [:max_statements]
+      end
+
       #
       # Checks the length of the given +method+.
       #

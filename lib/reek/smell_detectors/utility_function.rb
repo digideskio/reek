@@ -45,10 +45,12 @@ module Reek
         super.merge(PUBLIC_METHODS_ONLY_KEY => PUBLIC_METHODS_ONLY_DEFAULT)
       end
 
-      class << self
-        def contexts # :nodoc:
-          [:def]
-        end
+      def self.contexts
+        [:def]
+      end
+
+      def self.custom_options
+        Set.new [:public_methods_only]
       end
 
       #

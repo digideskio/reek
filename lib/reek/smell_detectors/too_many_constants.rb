@@ -29,6 +29,10 @@ module Reek
           EXCLUDE_KEY => [])
       end
 
+      def self.custom_options
+        Set.new [:max_constants]
+      end
+
       #
       # Checks +klass+ for too many constants.
       #

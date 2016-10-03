@@ -31,6 +31,10 @@ module Reek
           ACCEPT_KEY => DEFAULT_ACCEPT_PATTERNS)
       end
 
+      def self.custom_options
+        Set.new [:accept, :reject]
+      end
+
       #
       # Checks the given +context+ for uncommunicative names.
       #

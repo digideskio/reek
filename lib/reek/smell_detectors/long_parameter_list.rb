@@ -28,6 +28,10 @@ module Reek
           })
       end
 
+      def self.custom_options
+        Set.new [:max_params]
+      end
+
       #
       # Checks the number of parameters in the given method.
       #

@@ -36,6 +36,10 @@ module Reek
           ALLOW_CALLS_KEY => DEFAULT_ALLOW_CALLS)
       end
 
+      def self.custom_options
+        Set.new [:max_calls, :allow_calls]
+      end
+
       #
       # Looks for duplicate calls within the body of the method +ctx+.
       #

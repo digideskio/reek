@@ -41,6 +41,10 @@ module Reek
         super.merge(MAX_IDENTICAL_IFS_KEY => DEFAULT_MAX_IFS)
       end
 
+      def self.custom_options
+        Set.new [:max_ifs]
+      end
+
       #
       # Checks the given class for multiple identical conditional tests.
       #

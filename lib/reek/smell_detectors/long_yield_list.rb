@@ -19,6 +19,10 @@ module Reek
         super.merge MAX_ALLOWED_PARAMS_KEY => DEFAULT_MAX_ALLOWED_PARAMS
       end
 
+      def self.custom_options
+        Set.new [:max_params]
+      end
+
       #
       # Checks the number of parameters in the given scope.
       #

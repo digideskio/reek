@@ -45,6 +45,10 @@ module Reek
           MIN_CLUMP_SIZE_KEY => DEFAULT_MIN_CLUMP_SIZE)
       end
 
+      def self.custom_options
+        Set.new [:max_copies, :min_clump_size]
+      end
+
       #
       # Checks the given class or module for multiple identical parameter sets.
       #

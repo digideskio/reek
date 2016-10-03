@@ -34,6 +34,10 @@ module Reek
           IGNORE_ITERATORS_KEY => DEFAULT_IGNORE_ITERATORS)
       end
 
+      def self.custom_options
+        Set.new [:max_allowed_nesting, :ignore_iterators]
+      end
+
       # Generates a smell warning for each independent deepest nesting depth
       # that is greater than our allowed maximum. This means if two iterators
       # with the same depth were found, we combine them into one warning and
